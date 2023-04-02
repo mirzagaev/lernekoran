@@ -15,14 +15,28 @@
     "categories": {
       "auth": {
         "lernekoranreactgraph87deb97f": {},
-        "lernekoranreactgraphql": {}
+        "lernekoranreactgraphql": {},
+        "lernekoranreactgraphd6449c55d6449c55": {},
+        "userPoolGroups": {}
       },
       "function": {
         "lernekoranreactgraph87deb97fPostConfirmation": {
           "GROUP": "Admin",
           "deploymentBucketName": "amplify-amplify2726d4daafc94-staging-42332-deployment",
           "s3Key": "amplify-builds/lernekoranreactgraph87deb97fPostConfirmation-384c35486a6371674163-build.zip"
+        },
+        "lernekoranreactgraphd6449c55d6449c55PostConfirmation": {
+          "GROUP": "Member",
+          "deploymentBucketName": "amplify-amplify2726d4daafc94-staging-42332-deployment",
+          "s3Key": "amplify-builds/lernekoranreactgraphd6449c55d6449c55PostConfirmation-4d31324c66576853436b-build.zip"
+        },
+        "AdminQueries4a6192b4": {
+          "deploymentBucketName": "amplify-amplify2726d4daafc94-staging-42332-deployment",
+          "s3Key": "amplify-builds/AdminQueries4a6192b4-44346b55624663507476-build.zip"
         }
+      },
+      "api": {
+        "AdminQueries": {}
       }
     }
   }

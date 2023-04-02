@@ -1,27 +1,56 @@
 {
+  "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries4a6192b4"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
-    "lernekoranreactgraphql": {
+    "lernekoranreactgraphd6449c55d6449c55": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55PostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ],
+          "passwordPolicyCharacters": [],
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
           "BIRTHDATE",
-          "NAME",
-          "FAMILY_NAME"
+          "EMAIL",
+          "FAMILY_NAME",
+          "NAME"
         ],
         "socialProviders": [],
         "usernameAttributes": [
@@ -33,16 +62,67 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
     }
   },
   "function": {
+    "AdminQueries4a6192b4": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "lernekoranreactgraph87deb97fPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "lernekoranreactgraphd6449c55d6449c55PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
+    "AMPLIFY_function_AdminQueries4a6192b4_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries4a6192b4"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries4a6192b4_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries4a6192b4"
+        }
+      ]
+    },
     "AMPLIFY_function_lernekoranreactgraph87deb97fPostConfirmation_GROUP": {
       "usedBy": [
         {
@@ -64,6 +144,30 @@
         {
           "category": "function",
           "resourceName": "lernekoranreactgraph87deb97fPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_lernekoranreactgraphd6449c55d6449c55PostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_lernekoranreactgraphd6449c55d6449c55PostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_lernekoranreactgraphd6449c55d6449c55PostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "lernekoranreactgraphd6449c55d6449c55PostConfirmation"
         }
       ]
     }
