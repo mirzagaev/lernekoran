@@ -1,6 +1,8 @@
 function Teacher() {
     return (
-        <h3>Teacher logged in!</h3>
+        <div className="Teacher">
+            <h3>Teacher logged in!</h3>
+        </div>
     );
 }
 

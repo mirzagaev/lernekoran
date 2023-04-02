@@ -1,6 +1,8 @@
 function Admin() {
   return (
-    <h3>Admin logged in!</h3>
+    <div className="Admin">
+        <h3>Neuen Teilnehmer anlegen</h3>
+    </div>
   );
 }
 
