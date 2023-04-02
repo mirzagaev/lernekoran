@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "lernekoranreactgraph87deb97f",
+  "functionName": "lernekoranreactgraph87deb97fPostConfirmation",
+  "resourceName": "lernekoranreactgraph87deb97fPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "C:\\snapshot\\repo\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "lernekoranreactgraph87deb97fPostConfirmation",
+  "skipEdit": true
+}

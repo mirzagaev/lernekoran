@@ -1,0 +1,29 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify2726d4daafc94-staging-42332-authRole",
+      "UnauthRoleArn": "arn:aws:iam::400773690064:role/amplify-amplify2726d4daafc94-staging-42332-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::400773690064:role/amplify-amplify2726d4daafc94-staging-42332-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-amplify2726d4daafc94-staging-42332-deployment",
+      "UnauthRoleName": "amplify-amplify2726d4daafc94-staging-42332-unauthRole",
+      "StackName": "amplify-amplify2726d4daafc94-staging-42332",
+      "StackId": "arn:aws:cloudformation:eu-central-1:400773690064:stack/amplify-amplify2726d4daafc94-staging-42332/20ca0050-d10e-11ed-8e48-02e8e3ba2e42",
+      "AmplifyAppId": "d3i3d738naiznf",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-amplify2726d4daafc94-staging-42332-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "lernekoranreactgraph87deb97f": {},
+        "lernekoranreactgraphql": {}
+      },
+      "function": {
+        "lernekoranreactgraph87deb97fPostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-amplify2726d4daafc94-staging-42332-deployment",
+          "s3Key": "amplify-builds/lernekoranreactgraph87deb97fPostConfirmation-384c35486a6371674163-build.zip"
+        }
+      }
+    }
+  }
+}

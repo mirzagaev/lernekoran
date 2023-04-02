@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import App from './App';
+import App from './App/App';
+import Verwaltung from "./Verwaltung/Verwaltung";
 import reportWebVitals from './reportWebVitals';
+
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports';
+Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App/>} />
+        <Route path="/admin" element={<Verwaltung/>} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
