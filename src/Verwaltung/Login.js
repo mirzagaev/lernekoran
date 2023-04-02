@@ -8,17 +8,15 @@ import Member from './Member';
 function Verwaltung() {
   const { signOut } = useAuthenticator((context) => [context.user]);
   const { user } = useAuthenticator((context) => [context.user]);
-  const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+  const group = user.signInUserSession.accessToken.payload["cognito:groups"];
 
   return (
     <AppLayout content={
       <Container header={<Header variant="h1">Lerne-Koran.de</Header>}>
           <SpaceBetween direction="vertical" size="l">
               <h2>Hello {user.attributes?.name}</h2>
-              
-              {groups.includes('Admin') && <Admin/>}
-              {groups.includes('Teacher') && <Teacher/>}
-              {groups.includes('Member') && <Member/>}
+
+              <h4>{group}</h4>
 
               <Button onClick={signOut} variant="primary">Ausloggen</Button>
           </SpaceBetween>
