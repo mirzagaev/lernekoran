@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import App from './App/App';
-import Login from "./Verwaltung/Login";
+import App from './pages/App/App';
+import Login from "./pages/Verwaltung/Login";
 import reportWebVitals from './reportWebVitals';
 
 import { Amplify } from 'aws-amplify';
