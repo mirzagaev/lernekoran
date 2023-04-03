@@ -1,8 +1,10 @@
 function Member() {
     return (
         <div className="Member">
-            <h3>Member logged in!</h3>
-            <div>Show member data</div>
+            <h3>Hello User!</h3>
+            <div>list learned suras</div>
+            <div>list suras in order</div>
+            <div>list statistic</div>
         </div>
     );
 }
