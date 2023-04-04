@@ -1,6 +1,12 @@
 import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Auth, API } from 'aws-amplify';
+import { differenceInYears, parse } from "date-fns";
+const calculateAge = (dob) => {
+  const date = parse(dob, "dd/MM/yyyy", new Date())
+  const age = differenceInYears(new Date(), date)
+  return age
+}
 
 function Start() {
     const { user } = useAuthenticator((context) => [context.user]);
@@ -8,6 +14,7 @@ function Start() {
 
     let bday = user.attributes.birthdate;
     let date = bday.split("-");
+    let userAge = calculateAge(date[2]+"/"+date[1]+"/"+date[0]);
 
     return (
       <>
@@ -38,8 +45,8 @@ function Start() {
           <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" />
         </svg>
         <div className="pl-3">
-          <p className="text-sm font-medium leading-none text-gray-800">{date[2]}.{date[1]}.{date[0]}</p>
-          <p className="text-xs text-gray-500">Geburtstag</p>
+          <p className="text-sm font-medium leading-none text-gray-800">{userAge} Jahre alt</p>
+          <p className="text-xs text-gray-500">{date[2]}.{date[1]}.{date[0]}</p>
         </div>
       </div>
       <div className="flex px-4 py-4 hover:bg-gray-100">

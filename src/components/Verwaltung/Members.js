@@ -24,6 +24,7 @@ async function listMembers(limit){
 
 function Members() {
     const [users, setUsers] = useState([]);
+    const [currentUser, setCurrentUser] = useState();
     const [usersLoaded, setUsersLoaded] = useState(false);
   
     useEffect(() => {
@@ -38,13 +39,20 @@ function Members() {
       })();
     }, []);
 
+    const selectUser = (tn) => {
+      setCurrentUser(tn.Username);
+    };
+
     return (
       <>
       <h2 className="px-5 mt-8 text-lg font-medium text-gray-800">Teilnehmer</h2>
       <div className="mt-8">
         {usersLoaded ? (
           users.map(teilnehmer => (
-            <button key="{teilnehmer}" className="flex items-center w-full px-5 py-2 transition-colors duration-200 gap-x-2 hover:bg-gray-100 focus:outline-none">
+            <button
+              onClick={() => selectUser(teilnehmer)}
+              key={teilnehmer.Username}
+              className={"flex items-center w-full px-5 py-2 transition-colors duration-200 gap-x-2 "+ (currentUser === teilnehmer.Username ? 'text-teal-700 bg-teal-50': 'hover:bg-gray-100')}>
               <div className="text-left rtl:text-right">
                 <h1 className="text-sm font-medium text-gray-700 capitalize">{teilnehmer.Attributes[3].Value} {teilnehmer.Attributes[4].Value}</h1>
                 <p className="text-xs text-gray-500">0 Suran</p>
