@@ -1,13 +1,29 @@
 import React from 'react';
-import { useAuthenticator, Authenticator } from '@aws-amplify/ui-react';
-import "@aws-amplify/ui-react/styles.css";
 import Admin from './Admin';
 import Teacher from './Teacher';
 import Member from './Member';
 import Aside from '../../components/Verwaltung/Aside';
+import { translations, withAuthenticator } from '@aws-amplify/ui-react';
+import "@aws-amplify/ui-react/styles.css";
+import { I18n } from 'aws-amplify';
+I18n.putVocabularies(translations);
+// I18n.setLanguage('de');
 
-function Verwaltung() {
-  const { user } = useAuthenticator((context) => [context.user]);
+I18n.putVocabularies({
+  de: {
+    'Name': 'Vorname',
+    'Family Name': 'Nachname',
+    'Birthdate': 'Geburtstag',
+    'Create Account': 'Registrieren',
+    'Enter your Email': 'Geben Sie Ihre E-Mail ein',
+    'Enter your Password': 'Geben Sie Ihr Passwort ein',
+    'Please confirm your Password': 'Wiederholen Sie Ihr Passwort',
+    'Enter your Family Name': "Geben Sie Ihren Nachnamen ein",
+    'Enter your Name': "Geben Sie Ihren Vornamen ein",
+  },
+});
+
+function Verwaltung({ user }) {
   const group = user.signInUserSession.accessToken.payload["cognito:groups"];
 
   return (
@@ -24,14 +40,4 @@ function Verwaltung() {
   );
 }
 
-function Login() {
-  return (
-      <Authenticator.Provider>
-        <Authenticator>
-          <Verwaltung />
-        </Authenticator>
-      </Authenticator.Provider>
-  );
-}
-
-export default Login;
+export default withAuthenticator(Verwaltung);

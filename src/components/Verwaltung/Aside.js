@@ -44,8 +44,10 @@ function Aside() {
                     </svg>
                 </button>
             </div>
+            <div className="h-screen overflow-y-auto bg-white border-l border-r sm:w-64 w-60">
             {state === 'start' && <Start/> }
             {state === 'members' && <Members/> }
+            </div>
         </aside>
     );
 }
