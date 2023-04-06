@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Auth, API } from 'aws-amplify';
 
 let nextToken;
@@ -22,10 +23,11 @@ async function listMembers(limit){
   return rest;
 }
 
-function Memberlist() {
+function Subscriber() {
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState();
     const [usersLoaded, setUsersLoaded] = useState(false);
+    const navigate = useNavigate();
   
     useEffect(() => {
       (async () => {
@@ -38,10 +40,6 @@ function Memberlist() {
       })();
     }, []);
 
-    const selectUser = (tn) => {
-      setCurrentUser(tn.Username);
-    };
-
     return (
       <>
       <h2 className="px-5 mt-8 text-lg font-medium text-gray-800">Teilnehmer</h2>
@@ -49,7 +47,7 @@ function Memberlist() {
         {usersLoaded ? (
           users.map(teilnehmer => (
             <button
-              onClick={() => selectUser(teilnehmer)}
+              onClick={() => navigate('/subscriber/'+teilnehmer.Username)}
               key={teilnehmer.Username}
               className={"flex items-center w-full px-5 py-2 transition-colors duration-200 gap-x-2 "+ (currentUser === teilnehmer.Username ? 'text-teal-700 bg-teal-50': 'hover:bg-gray-100')}>
               <div className="text-left rtl:text-right">
@@ -68,4 +66,4 @@ function Memberlist() {
     );
 }
 
-export default Memberlist;
+export default Subscriber;

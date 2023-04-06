@@ -1,7 +1,7 @@
 function Teacher() {
     return (
         <div className="Teacher">
-            <h3>Neuen Klassenraum erstellen</h3>
+            <h1>Neuen Klassenraum erstellen</h1>
         </div>
     );
 }

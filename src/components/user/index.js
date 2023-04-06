@@ -1,12 +1,13 @@
 import React from 'react';
 import { differenceInYears, parse } from "date-fns";
+
 const calculateAge = (dob) => {
   const date = parse(dob, "dd/MM/yyyy", new Date())
   const age = differenceInYears(new Date(), date)
   return age
 }
 
-function Member({user, group}) {
+function Userpanel({user, group}) {
     let bday = user.attributes.birthdate;
     let date = bday.split("-");
     let userAge = calculateAge(date[2]+"/"+date[1]+"/"+date[0]);
@@ -57,4 +58,4 @@ function Member({user, group}) {
     );
 }
 
-export default Member;
+export default Userpanel;

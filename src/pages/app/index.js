@@ -5,8 +5,8 @@ import "@aws-amplify/ui-react/styles.css";
 import RequireAuth from "../../functions/RequireAuth";
 import Container from "../../components/container";
 import Login from "../../components/login";
-import Members from "../members";
-import Member from "../member";
+import Subscriber from "../subscriber";
+import Userpanel from "../user";
 import Statistic from "../statistic";
 
 function MyRoutes() {
@@ -15,14 +15,14 @@ function MyRoutes() {
       <Routes>
         <Route path="/" element={<Container />}>
           <Route index element={<Statistic />} />
-          <Route path="/member" element={
+          <Route path="/user" element={
             <RequireAuth>
-              <Member />
+              <Userpanel />
             </RequireAuth>
           } />
-          <Route path="/members" element={
+          <Route path="/subscriber/:username?" element={
             <RequireAuth>
-              <Members />
+              <Subscriber />
             </RequireAuth>
           } />
         </Route>

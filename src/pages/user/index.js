@@ -3,10 +3,10 @@ import "@aws-amplify/ui-react/styles.css";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Login from '../../components/login';
 
-function Member() {
+function UserContainer({user}) {
     return (
         <div className="Member">
-            <h3>Hello User!</h3>
+            <h1>Salam {user.attributes.name} {user.attributes.family_name}</h1>
             <div>list learned suras</div>
             <div>list suras in order</div>
             <div>list statistic</div>
@@ -14,13 +14,17 @@ function Member() {
     );
 }
 
-function Members() {
-    const { route } = useAuthenticator((context) => [context.route]);
+function Userpanel() {
+    const { route, user } = useAuthenticator((context) => [
+        context.route,
+        context.user
+    ]);
+    
     return (
         <div className="MembersPage">
-            {route === 'authenticated' ? <Member /> : <Login />}
+            {route === 'authenticated' ? <UserContainer user={user} /> : <Login />}
         </div>
     );
 }
 
-export default Members;
+export default Userpanel;
