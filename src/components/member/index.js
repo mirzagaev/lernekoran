@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { Auth, API } from 'aws-amplify';
 import { differenceInYears, parse } from "date-fns";
 const calculateAge = (dob) => {
   const date = parse(dob, "dd/MM/yyyy", new Date())
@@ -8,10 +7,7 @@ const calculateAge = (dob) => {
   return age
 }
 
-function Start() {
-    const { user } = useAuthenticator((context) => [context.user]);
-    const group = user.signInUserSession.accessToken.payload["cognito:groups"];
-
+function Member({user, group}) {
     let bday = user.attributes.birthdate;
     let date = bday.split("-");
     let userAge = calculateAge(date[2]+"/"+date[1]+"/"+date[0]);
@@ -32,9 +28,9 @@ function Start() {
         </svg>
         <div className="pl-3">
           <p className="text-sm font-medium leading-none text-gray-800">
-            {group.includes('Admin') && "Administation"}
-            {group.includes('Teacher') && "Lehrkraft"}
-            {group.includes('Member') && "Teilnehmer/in"}
+            {group === 'Admin' && "Administation"}
+            {group === 'Teacher' && "Lehrkraft"}
+            {group === 'Member' && "Teilnehmer/in"}
           </p>
           <p className="text-xs text-gray-500">Rolle</p>
         </div>
@@ -62,4 +58,4 @@ function Start() {
     );
 }
 
-export default Start;
+export default Member;

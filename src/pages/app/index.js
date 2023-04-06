@@ -6,6 +6,7 @@ import RequireAuth from "../../functions/RequireAuth";
 import Container from "../../components/container";
 import Login from "../../components/login";
 import Members from "../members";
+import Member from "../member";
 import Statistic from "../statistic";
 
 function MyRoutes() {
@@ -14,6 +15,11 @@ function MyRoutes() {
       <Routes>
         <Route path="/" element={<Container />}>
           <Route index element={<Statistic />} />
+          <Route path="/member" element={
+            <RequireAuth>
+              <Member />
+            </RequireAuth>
+          } />
           <Route path="/members" element={
             <RequireAuth>
               <Members />

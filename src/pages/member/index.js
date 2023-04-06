@@ -3,10 +3,13 @@ import "@aws-amplify/ui-react/styles.css";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Login from '../../components/login';
 
-function MembersContainer() {
+function Member() {
     return (
-        <div className="Admin">
-            <h1 className='text-xl'>Neuen Teilnehmer anlegen</h1>
+        <div className="Member">
+            <h3>Hello User!</h3>
+            <div>list learned suras</div>
+            <div>list suras in order</div>
+            <div>list statistic</div>
         </div>
     );
 }
@@ -16,7 +19,7 @@ function Members() {
     const message = route === 'authenticated' ? 'FIRST PROTECTED ROUTE!' : 'Loading...';
     return (
         <div className="MembersPage">
-            {route === 'authenticated' ? <MembersContainer /> : <Login />}
+            {route === 'authenticated' ? <Member /> : <Login />}
         </div>
     );
 }
