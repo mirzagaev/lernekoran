@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuthenticator } from '@aws-amplify/ui-react';
 import { differenceInYears, parse } from "date-fns";
 const calculateAge = (dob) => {
   const date = parse(dob, "dd/MM/yyyy", new Date())

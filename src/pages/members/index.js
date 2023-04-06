@@ -13,7 +13,6 @@ function MembersContainer() {
 
 function Members() {
     const { route } = useAuthenticator((context) => [context.route]);
-    const message = route === 'authenticated' ? 'FIRST PROTECTED ROUTE!' : 'Loading...';
     return (
         <div className="MembersPage">
             {route === 'authenticated' ? <MembersContainer /> : <Login />}
