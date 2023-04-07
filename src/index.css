@@ -6,12 +6,12 @@
   main h1 {
     @apply w-full pb-4 mb-10 text-3xl border-b-2 border-gray-300;
   }
-  main h2 {
+  /* main h2 {
     @apply w-full pb-4 mb-10 text-2xl border-b-2 border-gray-300;
   }
   main h3 {
     @apply w-full pb-4 mb-10 text-xl border-b-2 border-gray-300;
-  }
+  } */
 }
 
 body {

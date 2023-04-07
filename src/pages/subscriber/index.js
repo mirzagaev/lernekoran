@@ -18,7 +18,7 @@ function Subscriber() {
     const { username } = useParams();
 
     return (
-        <div className="MembersPage">
+        <div className="w-full Subscriber">
             {route === 'authenticated' ? (
                 username ? <Skills username={username} /> : <SubscriberContainer />
             ) : <Login />}

@@ -1,6 +1,6 @@
 function Statistic() {
     return (
-        <div className="Statistic">
+        <div className="w-full Statistic">
             <h1>Statistik</h1>
         </div>
     );
