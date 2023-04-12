@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import "@aws-amplify/ui-react/styles.css";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Login from '../../components/login';
-import Skills from "../skills";
+import SkillsContainer from "../skills";
 
 function SubscriberContainer() {
     return (
@@ -20,7 +20,7 @@ function Subscriber() {
     return (
         <div className="w-full Subscriber">
             {route === 'authenticated' ? (
-                username ? <Skills username={username} /> : <SubscriberContainer />
+                username ? <SkillsContainer username={username} /> : <SubscriberContainer />
             ) : <Login />}
         </div>
     );

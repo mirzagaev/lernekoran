@@ -1,4 +1,14 @@
-function Skills({username}) {
+import { DataStore } from '@aws-amplify/datastore';
+import { Quran } from './models';
+import { Skills } from './models';
+
+const modelsQuran = await DataStore.query(Quran);
+console.log(modelsQuran);
+
+const models = await DataStore.query(Skills);
+console.log(models);
+
+function SkillsContainer({username}) {
     return (
         <div className="Skills">
             <h1>{username} hat 49 Themen gelernt</h1>
@@ -72,4 +82,4 @@ function Skills({username}) {
     );
 }
 
-export default Skills;
+export default SkillsContainer;

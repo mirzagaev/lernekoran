@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "lernekoranreactgraphql",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authlernekoranreactgraphd6449c55d6449c55",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
