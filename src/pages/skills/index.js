@@ -1,17 +1,33 @@
-import { DataStore } from '@aws-amplify/datastore';
-import { Quran } from './models';
-import { Skills } from './models';
+import React, { useEffect } from "react";
+import { Quran } from '../../models';
+// import { Skills } from './models';
+import { Amplify, DataStore } from 'aws-amplify';
+import config from '../../aws-exports';
+Amplify.configure(config);
 
-const modelsQuran = await DataStore.query(Quran);
-console.log(modelsQuran);
-
-const models = await DataStore.query(Skills);
-console.log(models);
+async function onQuery() {
+    const suran = await DataStore.query(Quran);
+    console.log(suran);
+}
 
 function SkillsContainer({username}) {
+    useEffect(() => {
+        const subscription = DataStore.observe(Quran).subscribe((msg) => {
+          console.log(msg.model, msg.opType, msg.element);
+        });
+    
+        return () => subscription.unsubscribe();
+    }, []);
+
     return (
         <div className="Skills">
             <h1>{username} hat 49 Themen gelernt</h1>
+
+            <div>
+                <input type="button" value="NEW" className="p-4 mr-2 text-white bg-blue-500" onClick={onCreate} />
+                {/* <input type="button" value="DELETE ALL" onClick={onDeleteAll} /> */}
+                <input type="button" value="QUERY rating > 4" className="p-4 mr-2 text-white bg-green-500" onClick={onQuery} />
+            </div>
 
             <div class="flex flex-wrap -m-4">
                 <div class="p-4 md:w-1/3">

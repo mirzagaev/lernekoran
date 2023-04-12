@@ -12,8 +12,9 @@ type EagerQuran = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly sura: string;
+  readonly nr?: number | null;
   readonly skills?: (QuranSkills | null)[] | null;
+  readonly sura: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -24,8 +25,9 @@ type LazyQuran = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly sura: string;
+  readonly nr?: number | null;
   readonly skills: AsyncCollection<QuranSkills>;
+  readonly sura: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

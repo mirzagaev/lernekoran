@@ -25,7 +25,7 @@ async function listMembers(limit){
 
 function Subscriber() {
     const [users, setUsers] = useState([]);
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser] = useState();
     const [usersLoaded, setUsersLoaded] = useState(false);
     const navigate = useNavigate();
   

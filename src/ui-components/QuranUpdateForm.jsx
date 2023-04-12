@@ -24,14 +24,17 @@ export default function QuranUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    nr: "",
     sura: "",
   };
+  const [nr, setNr] = React.useState(initialValues.nr);
   const [sura, setSura] = React.useState(initialValues.sura);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = quranRecord
       ? { ...initialValues, ...quranRecord }
       : initialValues;
+    setNr(cleanValues.nr);
     setSura(cleanValues.sura);
     setErrors({});
   };
@@ -47,6 +50,7 @@ export default function QuranUpdateForm(props) {
   }, [idProp, quranModelProp]);
   React.useEffect(resetStateValues, [quranRecord]);
   const validations = {
+    nr: [],
     sura: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -75,6 +79,7 @@ export default function QuranUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          nr,
           sura,
         };
         const validationResponses = await Promise.all(
@@ -123,6 +128,35 @@ export default function QuranUpdateForm(props) {
       {...rest}
     >
       <TextField
+        label="Nr"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={nr}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              nr: value,
+              sura,
+            };
+            const result = onChange(modelFields);
+            value = result?.nr ?? value;
+          }
+          if (errors.nr?.hasError) {
+            runValidationTasks("nr", value);
+          }
+          setNr(value);
+        }}
+        onBlur={() => runValidationTasks("nr", nr)}
+        errorMessage={errors.nr?.errorMessage}
+        hasError={errors.nr?.hasError}
+        {...getOverrideProps(overrides, "nr")}
+      ></TextField>
+      <TextField
         label="Sura"
         isRequired={true}
         isReadOnly={false}
@@ -131,6 +165,7 @@ export default function QuranUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              nr,
               sura: value,
             };
             const result = onChange(modelFields);

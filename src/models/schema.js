@@ -10,11 +10,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "sura": {
-                    "name": "sura",
+                "nr": {
+                    "name": "nr",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
+                    "type": "Int",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "skills": {
@@ -32,6 +32,13 @@ export const schema = {
                             "quran"
                         ]
                     }
+                },
+                "sura": {
+                    "name": "sura",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -285,5 +292,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "9c961244a7eaedbfb597c8b81760fcd4"
+    "version": "21f6c6ebeb2bc309c90fd5031bd68407"
 };

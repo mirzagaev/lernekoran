@@ -13,14 +13,17 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QuranCreateFormInputValues = {
+    nr?: number;
     sura?: string;
 };
 export declare type QuranCreateFormValidationValues = {
+    nr?: ValidationFunction<number>;
     sura?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QuranCreateFormOverridesProps = {
     QuranCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    nr?: PrimitiveOverrideProps<TextFieldProps>;
     sura?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QuranCreateFormProps = React.PropsWithChildren<{
