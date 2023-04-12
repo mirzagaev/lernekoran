@@ -40,7 +40,7 @@ function Container() {
     }
     
     return (
-        <div className="flex h-screen bg-gray-100 Container">
+        <div className="flex bg-gray-100 Container">
             <aside className="flex">
                 <div className="flex flex-col items-center w-16 h-screen py-8 space-y-8 bg-white">
                     <div className="flex items-center justify-center px-4 text-teal-700 rounded-md">

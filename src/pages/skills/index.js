@@ -1,98 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Quran } from '../../models';
-// import { Skills } from './models';
 import { Amplify, DataStore } from 'aws-amplify';
 import config from '../../aws-exports';
+import Alert from "../../components/alerts";
 Amplify.configure(config);
 
-async function onQuery() {
-    const suran = await DataStore.query(Quran);
-    console.log(suran);
-}
 
 function SkillsContainer({username}) {
-    useEffect(() => {
-        const subscription = DataStore.observe(Quran).subscribe((msg) => {
-          console.log(msg.model, msg.opType, msg.element);
-        });
+    const [suran, setSuran] = useState([]);
     
+    async function fetchData() {
+        setSuran(await DataStore.query(Quran));
+    }
+
+    useEffect(() => {
+        fetchData();
+        const subscription = DataStore.observe(Quran).subscribe(() =>
+            fetchData()
+        );
         return () => subscription.unsubscribe();
-    }, []);
+    });
 
     return (
         <div className="Skills">
             <h1>{username} hat 49 Themen gelernt</h1>
 
-            <div>
-                <input type="button" value="NEW" className="p-4 mr-2 text-white bg-blue-500" onClick={onCreate} />
-                {/* <input type="button" value="DELETE ALL" onClick={onDeleteAll} /> */}
-                <input type="button" value="QUERY rating > 4" className="p-4 mr-2 text-white bg-green-500" onClick={onQuery} />
-            </div>
+            {!suran.length && <Alert type="warning" title="Laden fehlgeschlagen" content="Suran konnten nicht geladen werden" />}
 
             <div class="flex flex-wrap -m-4">
-                <div class="p-4 md:w-1/3">
+            {suran.map(sura => (
+                <div class="p-2 md:w-1/4" key={sura.id}>
                     <div class="flex bg-gray-50 px-5 py-3 sm:flex-row flex-col">
-                        <div class="w-10 h-10 sm:mr-5 inline-flex items-center justify-center text-gray-500 text-xl">1</div>
-                        <div class="flex-grow">
-                            <h2 class="text-gray-900 text-lg title-font font-medium">Al Baqara</h2>
-                            <p class="leading-relaxed text-sm font-light -mt-1">Die Eröffnende</p>
+                        <div class="w-7 h-6 sm:mr-5 inline-flex items-center justify-center text-gray-500 text-xl">{sura.nr}</div>
+                        <div class="flex-grow text-gray-900 text-lg title-font font-medium">{sura.sura}</div>
+                        <div class="flex items-center">
+                            <input type="radio" name="skill" id="radio1" class="h-4 w-4" />
+                            <label class="pl-1 pr-3 text-base font-medium">0</label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio1" class="h-5 w-5" />
-                            <label for="radio1" class="pl-2 pr-5 text-base font-medium">0</label>
+                            <input type="radio" name="skill" id="radio2" class="h-4 w-4" />
+                            <label for="radio2" class="pl-1 pr-3 text-base font-medium">1</label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio2" class="h-5 w-5" />
-                            <label for="radio2" class="pl-2 pr-5 text-base font-medium">1</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio3" class="h-5 w-5" />
-                            <label for="radio3" class="pl-2 text-base font-medium">2</label>
+                            <input type="radio" name="skill" id="radio3" class="h-4 w-4" />
+                            <label for="radio3" class="pl-1 text-base font-medium">2</label>
                         </div>
                     </div>
                 </div>
-                <div class="p-4 md:w-1/3">
-                    <div class="flex bg-lime-100 px-5 py-3 sm:flex-row flex-col">
-                        <div class="w-10 h-10 sm:mr-5 inline-flex items-center justify-center text-gray-500 text-xl">1</div>
-                        <div class="flex-grow">
-                            <h2 class="text-gray-900 text-lg title-font font-medium">Al Baqara</h2>
-                            <p class="leading-relaxed text-sm font-light -mt-1">Die Eröffnende</p>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio1" class="h-5 w-5" />
-                            <label for="radio1" class="pl-2 pr-5 text-base font-medium">0</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio2" class="h-5 w-5" />
-                            <label for="radio2" class="pl-2 pr-5 text-base font-medium">1</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio3" class="h-5 w-5" />
-                            <label for="radio3" class="pl-2 text-base font-medium">2</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-4 md:w-1/3">
-                    <div class="flex bg-amber-100 px-5 py-3 sm:flex-row flex-col">
-                        <div class="w-10 h-10 sm:mr-5 inline-flex items-center justify-center text-gray-500 text-xl">1</div>
-                        <div class="flex-grow">
-                            <h2 class="text-gray-900 text-lg title-font font-medium">Al Baqara</h2>
-                            <p class="leading-relaxed text-sm font-light -mt-1">Die Eröffnende</p>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio1" class="h-5 w-5" />
-                            <label for="radio1" class="pl-2 pr-5 text-base font-medium">0</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio2" class="h-5 w-5" />
-                            <label for="radio2" class="pl-2 pr-5 text-base font-medium">1</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" name="skill" id="radio3" class="h-5 w-5" />
-                            <label for="radio3" class="pl-2 text-base font-medium">2</label>
-                        </div>
-                    </div>
-                </div>
+            ))}
             </div>
         </div>
     );
