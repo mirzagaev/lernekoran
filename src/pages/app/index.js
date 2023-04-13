@@ -8,6 +8,7 @@ import Login from "../../components/login";
 import Subscriber from "../subscriber";
 import Userpanel from "../user";
 import Statistic from "../statistic";
+import Group from '../group';
 
 function MyRoutes() {
   return (
@@ -23,6 +24,11 @@ function MyRoutes() {
           <Route path="/subscriber/:username?" element={
             <RequireAuth>
               <Subscriber />
+            </RequireAuth>
+          } />
+          <Route path="/group/:action?/:group?" element={
+            <RequireAuth>
+              <Group />
             </RequireAuth>
           } />
         </Route>

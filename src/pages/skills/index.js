@@ -30,7 +30,7 @@ function SkillsContainer({username}) {
             <div class="flex flex-wrap -m-4">
             {suran.map(sura => (
                 <div class="p-2 md:w-1/4" key={sura.id}>
-                    <div class="flex bg-gray-50 px-5 py-3 sm:flex-row flex-col">
+                    <div class="flex bg-gray-100 px-5 py-3 sm:flex-row flex-col">
                         <div class="w-7 h-6 sm:mr-5 inline-flex items-center justify-center text-gray-500 text-xl">{sura.nr}</div>
                         <div class="flex-grow text-gray-900 text-lg title-font font-medium">{sura.sura}</div>
                         <div class="flex items-center">

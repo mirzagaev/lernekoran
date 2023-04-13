@@ -4,11 +4,14 @@ import "@aws-amplify/ui-react/styles.css";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Login from '../../components/login';
 import SkillsContainer from "../skills";
+import Alert from '../../components/alerts';
 
 function SubscriberContainer() {
     return (
         <div className="Admin">
-            <h1>Neuen Teilnehmer anlegen</h1>
+            <h1>Gruppen</h1>
+            
+            <Alert type="warning" title="Gruppen nicht vorhanden" content="Es existieren noch keine Gruppen" button="Gruppe anlegen" navigate="/group/create" />
         </div>
     );
 }
