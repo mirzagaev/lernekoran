@@ -17,22 +17,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "skills": {
-                    "name": "skills",
-                    "isArray": true,
-                    "type": {
-                        "model": "QuranSkills"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "quran"
-                        ]
-                    }
-                },
                 "sura": {
                     "name": "sura",
                     "isArray": false,
@@ -120,21 +104,30 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "QuranSkills": {
-                    "name": "QuranSkills",
-                    "isArray": true,
+                "sura": {
+                    "name": "sura",
+                    "isArray": false,
                     "type": {
-                        "model": "QuranSkills"
+                        "model": "Quran"
                     },
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
                     "association": {
-                        "connectionType": "HAS_MANY",
+                        "connectionType": "HAS_ONE",
                         "associatedWith": [
-                            "skills"
+                            "id"
+                        ],
+                        "targetNames": [
+                            "skillsSuraId"
                         ]
                     }
+                },
+                "skillsSuraId": {
+                    "name": "skillsSuraId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -189,108 +182,10 @@ export const schema = {
                     }
                 }
             ]
-        },
-        "QuranSkills": {
-            "name": "QuranSkills",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "quranId": {
-                    "name": "quranId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "skillsId": {
-                    "name": "skillsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "quran": {
-                    "name": "quran",
-                    "isArray": false,
-                    "type": {
-                        "model": "Quran"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "quranId"
-                        ]
-                    }
-                },
-                "skills": {
-                    "name": "skills",
-                    "isArray": false,
-                    "type": {
-                        "model": "Skills"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "skillsId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "QuranSkills",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byQuran",
-                        "fields": [
-                            "quranId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySkills",
-                        "fields": [
-                            "skillsId"
-                        ]
-                    }
-                }
-            ]
         }
     },
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "21f6c6ebeb2bc309c90fd5031bd68407"
+    "version": "62f110587ab68b67e0bdb45b87ff489c"
 };

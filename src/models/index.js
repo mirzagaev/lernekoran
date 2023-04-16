@@ -4,10 +4,9 @@ import { schema } from './schema';
 
 
 
-const { Quran, Skills, QuranSkills } = initSchema(schema);
+const { Quran, Skills } = initSchema(schema);
 
 export {
   Quran,
-  Skills,
-  QuranSkills
+  Skills
 };

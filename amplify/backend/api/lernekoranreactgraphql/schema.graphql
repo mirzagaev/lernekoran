@@ -1,7 +1,6 @@
 type Quran @model @auth(rules: [{allow: public}]) {
   id: ID!
   nr: Int
-  skills: [Skills] @manyToMany(relationName: "QuranSkills")
   sura: String!
 }
 
@@ -11,6 +10,6 @@ type Skills @model @auth(rules: [{allow: public}, {allow: groups, groups: ["Teac
   state: Int!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
-  QuranSkills: [Quran!] @manyToMany(relationName: "QuranSkills")
+  sura: Quran @hasOne
 }
  

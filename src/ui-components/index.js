@@ -7,3 +7,5 @@
 export { default as studioTheme } from "./studioTheme";
 export { default as QuranCreateForm } from "./QuranCreateForm";
 export { default as QuranUpdateForm } from "./QuranUpdateForm";
+export { default as SkillsCreateForm } from "./SkillsCreateForm";
+export { default as SkillsUpdateForm } from "./SkillsUpdateForm";

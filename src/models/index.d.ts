@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
 
 
@@ -13,7 +13,6 @@ type EagerQuran = {
   };
   readonly id: string;
   readonly nr?: number | null;
-  readonly skills?: (QuranSkills | null)[] | null;
   readonly sura: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -26,7 +25,6 @@ type LazyQuran = {
   };
   readonly id: string;
   readonly nr?: number | null;
-  readonly skills: AsyncCollection<QuranSkills>;
   readonly sura: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -47,7 +45,8 @@ type EagerSkills = {
   readonly state: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly QuranSkills?: QuranSkills[] | null;
+  readonly sura?: Quran | null;
+  readonly skillsSuraId?: string | null;
 }
 
 type LazySkills = {
@@ -59,45 +58,12 @@ type LazySkills = {
   readonly state: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly QuranSkills: AsyncCollection<QuranSkills>;
+  readonly sura: AsyncItem<Quran | undefined>;
+  readonly skillsSuraId?: string | null;
 }
 
 export declare type Skills = LazyLoading extends LazyLoadingDisabled ? EagerSkills : LazySkills
 
 export declare const Skills: (new (init: ModelInit<Skills>) => Skills) & {
   copyOf(source: Skills, mutator: (draft: MutableModel<Skills>) => MutableModel<Skills> | void): Skills;
-}
-
-type EagerQuranSkills = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<QuranSkills, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly quranId?: string | null;
-  readonly skillsId?: string | null;
-  readonly quran: Quran;
-  readonly skills: Skills;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyQuranSkills = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<QuranSkills, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly quranId?: string | null;
-  readonly skillsId?: string | null;
-  readonly quran: AsyncItem<Quran>;
-  readonly skills: AsyncItem<Skills>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type QuranSkills = LazyLoading extends LazyLoadingDisabled ? EagerQuranSkills : LazyQuranSkills
-
-export declare const QuranSkills: (new (init: ModelInit<QuranSkills>) => QuranSkills) & {
-  copyOf(source: QuranSkills, mutator: (draft: MutableModel<QuranSkills>) => MutableModel<QuranSkills> | void): QuranSkills;
 }

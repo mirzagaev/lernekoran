@@ -1,0 +1,45 @@
+/***************************************************************************
+ * The contents of this file were generated with Amplify Studio.           *
+ * Please refrain from making any modifications to this file.              *
+ * Any changes to this file will be overwritten when running amplify pull. *
+ **************************************************************************/
+
+import * as React from "react";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+export declare type ValidationResponse = {
+    hasError: boolean;
+    errorMessage?: string;
+};
+export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type SkillsCreateFormInputValues = {
+    teilnehmer?: string;
+    state?: number;
+    createdAt?: string;
+    updatedAt?: string;
+};
+export declare type SkillsCreateFormValidationValues = {
+    teilnehmer?: ValidationFunction<string>;
+    state?: ValidationFunction<number>;
+    createdAt?: ValidationFunction<string>;
+    updatedAt?: ValidationFunction<string>;
+};
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type SkillsCreateFormOverridesProps = {
+    SkillsCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    teilnehmer?: PrimitiveOverrideProps<TextFieldProps>;
+    state?: PrimitiveOverrideProps<TextFieldProps>;
+    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
+    updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
+} & EscapeHatchProps;
+export declare type SkillsCreateFormProps = React.PropsWithChildren<{
+    overrides?: SkillsCreateFormOverridesProps | undefined | null;
+} & {
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: SkillsCreateFormInputValues) => SkillsCreateFormInputValues;
+    onSuccess?: (fields: SkillsCreateFormInputValues) => void;
+    onError?: (fields: SkillsCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: SkillsCreateFormInputValues) => SkillsCreateFormInputValues;
+    onValidate?: SkillsCreateFormValidationValues;
+} & React.CSSProperties>;
+export default function SkillsCreateForm(props: SkillsCreateFormProps): React.ReactElement;
