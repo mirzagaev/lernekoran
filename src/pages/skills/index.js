@@ -18,19 +18,6 @@ async function getUserData(username){
     return await API.get(apiName, path, myInit);
 }
 
-function getSkills(userId) {
-    let cnt = 0;
-    const erg = DataStore.query(Skills, (c) => c.teilnehmer.eq(userId));
-    
-    erg.then(function(result) {
-        cnt = result.length;
-        // console.log(cnt);
-    })
-
-    // console.log(cnt);
-    return cnt;
-}
-
 function SuraContainer({username, sura}) {
     const [stateSura, setStateSura] = useState(0);
 
@@ -49,11 +36,9 @@ function SuraContainer({username, sura}) {
 
     return (
         <div className="p-2 md:w-1/4">
-            <div className={"flex flex-col px-5 py-3 sm:flex-row"+(stateSura===0 && " bg-gray-100", stateSura===1 && " bg-lime-100", stateSura===2 && " bg-amber-100")}>
+            <div className={"flex flex-col px-5 py-3 sm:flex-row"+((stateSura===0 && " bg-gray-100") || (stateSura===1 && " bg-lime-100") || (stateSura===2 && " bg-amber-100"))}>
                 <div className="inline-flex items-center justify-center h-6 text-xl text-gray-500 w-7 sm:mr-5">{sura.nr}</div>
                 <div className="flex-grow text-lg font-medium text-gray-900 title-font">{sura.sura}</div>
-                
-                {/* <div className="flex items-center">{stateSura}</div> */}
                 <div className="flex items-center">
                     <input
                         type="radio"
@@ -102,7 +87,7 @@ function SkillsContainer({username}) {
     const [userFound, setUserFound] = useState(false);
     const [userdata, setUserdata] = useState([]);
     const [suran, setSuran] = useState([]);
-    const [skills, setSkills] = useState();
+    const [skillsNr, setSkillsNr] = useState(0);
 
     useEffect(() => {
         (async () => {
@@ -111,11 +96,16 @@ function SkillsContainer({username}) {
                 setUserdata(res);
                 setUserFound(true);
 
-                // setSkills(getSkills(username));
-                DataStore.query(Skills, (c) => c.teilnehmer.eq(username)).then((result)=>result.length);
-                setSkills();
+                // get Number of Skills
+                DataStore.query(Skills, (c) => c.and(c => [
+                    c.teilnehmer.eq(username),
+                    c.state.eq(1)
+                ])).then(function(result) {
+                    setSkillsNr(result.length);
+                });
             } else {
                 setUserFound(false);
+                setSkillsNr(0);
             }
         })();
     }, [username]);
@@ -139,7 +129,7 @@ function SkillsContainer({username}) {
         <div className="Skills">
             {userFound ? (
                 <>
-                <h1>{userdata.UserAttributes[3].Value} hat {skills} Suran gelernt</h1>
+                <h1>{userdata.UserAttributes[3].Value} hat {skillsNr} Suran gelernt</h1>
                 {!suran.length && <Alert type="warning" title="Laden fehlgeschlagen" content="Suran konnten nicht geladen werden" />}
                 
                 <div className="flex flex-wrap mt-4 -m-4">
