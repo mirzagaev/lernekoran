@@ -3,6 +3,7 @@ import "@aws-amplify/ui-react/styles.css";
 import {  DataStore } from 'aws-amplify';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Login from '../../components/login';
+import Alert from '../../components/alerts';
 import { Quran, Skills } from '../../models';
 
 function SuraContainer({suraId}) {
@@ -19,12 +20,14 @@ function SuraContainer({suraId}) {
     return (
         sura &&
         <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-            <div className="flex px-5 py-3 bg-lime-100 sm:flex-row">
+            <div className="flex items-center justify-center px-5 py-3 bg-lime-100 sm:flex-row">
                 <div className="flex-grow">
                     <h2 className="text-lg font-medium text-gray-900 title-font">{sura.sura}</h2>
                     <p className="-mt-1 text-sm font-light leading-relaxed">Die Eröffnende</p>
                 </div>
-                <div className="inline-flex items-center justify-center flex-grow w-10 h-10 ml-auto text-xl text-gray-400 sm:flex-col">{sura.nr}</div>
+                <div className="inline-flex items-center justify-center ml-auto text-lg font-semibold text-gray-500 rotate-45 bg-white w-9 h-9 sm:flex-col">
+                    <div className='-rotate-45'>{sura.nr}</div>
+                </div>
             </div>
         </div>
     );
@@ -53,7 +56,9 @@ function UserContainer({user}) {
 
     return (
         <div className="MemberSkillsContainer">
-            <h1>Salam {user.attributes.name} {user.attributes.family_name}</h1>
+            <h1>Gelernte Suran</h1>
+
+            <Alert type="info" title="Dein aktuelles Ziel" content="Absolviere die Prüfung für das 30. Kapitel, bevor du Suran aus dem 29. Kapitel lernst." />
 
             <div className="flex flex-wrap mt-4 -m-4">
                 {skills.map(skill => (
