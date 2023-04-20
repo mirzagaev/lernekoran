@@ -19,7 +19,7 @@ function ShowGroup({name}) {
 
 function Group() {
     const { action, group } = useParams();
-    return action === "create" && <CreateNew /> || action === "show" && <ShowGroup name={group} />;
+    return (action === "create" && <CreateNew />) || (action === "show" && <ShowGroup name={group} />);
 }
 
 export default Group;

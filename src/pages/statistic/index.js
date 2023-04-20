@@ -1,31 +1,11 @@
 import React, { useState, useEffect } from "react";
+import AWS from 'aws-sdk';
 import { Auth, API, DataStore } from 'aws-amplify';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Chart, initTE } from "tw-elements";
 import { Skills } from '../../models';
 import Alert from "../../components/alerts";
 import CalculateAge from "../../functions/User";
-
-let nextToken;
-
-async function listMembers(limit){
-  let apiName = 'AdminQueries';
-  let path = '/listUsersInGroup';
-  let myInit = { 
-      queryStringParameters: {
-          "groupname": "Member",
-          "limit": limit,
-          "token": nextToken
-      },
-      headers: {
-          'Content-Type' : 'application/json',
-          Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
-      }
-  }
-  const { NextToken, ...rest } =  await API.get(apiName, path, myInit);
-  nextToken = NextToken;
-  return rest;
-}
 
 const dataBarHorizontal = {
     type: "bar",
@@ -95,9 +75,7 @@ const optionsBarHorizontal = {
 };
 
 function Subscriber({teilnehmer}) {
-    // const navigate = useNavigate();
     const [skillsNr, setSkillsNr] = useState(0);
-    // const [age, setAge] = useState();
   
     useEffect(() => {
       (async () => {
@@ -111,58 +89,100 @@ function Subscriber({teilnehmer}) {
     }, [teilnehmer]);
   
     return (
+      skillsNr > 0 && (
         <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
             <div className="flex items-center justify-center px-5 py-3 bg-slate-200 sm:flex-row">
                 <div className="flex-grow">
                     <h2 className="text-lg font-medium text-gray-900 title-font">{teilnehmer.Attributes[3].Value} {teilnehmer.Attributes[4].Value.substring(0, 1)}.</h2>
-                        <p className="-mt-1 text-sm font-light leading-relaxed"><CalculateAge birthdate={teilnehmer.Attributes[1].Value} /> Jahre alt</p>
+                    <p className="-mt-1 text-sm font-light leading-relaxed"><CalculateAge birthdate={teilnehmer.Attributes[1].Value} /> Jahre alt</p>
                 </div>
                 <div className="inline-flex items-center justify-center px-3 ml-auto text-sm font-semibold text-gray-500 bg-white w-fit h-9 sm:flex-col">
                     <div className=''>{skillsNr} Themen gelernt</div>
                 </div>
             </div>
         </div>
+      )
     )
-  }
+}
+
+const API_MAP = {
+  USER_POOL_ID: "eu-central-1_5DnUlAAXB",
+  USER_POOL_REGION: "eu-central-1",
+  AWS_IAM_ACCESS_KEY_ID: "AKIAV2T7ZGLIKAM2OM4L",
+  AWS_IAM_SECRETACCESS_KEY: "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"
+};
 
 function Statistic() {
     const [users, setUsers] = useState([]);
     const [usersLoaded, setUsersLoaded] = useState(false);
     const { route } = useAuthenticator((context) => [context.route]);
     
-    initTE({ Chart });
-    new Chart(
-        document.getElementById("bar-chart-horizontal"),
-        dataBarHorizontal,
-        optionsBarHorizontal
-    );
-    
-    useEffect(() => {
-        (async () => {
-          setUsersLoaded(false);
-          let res = await listMembers();
-          if (res["Users"].length > 0) {
-            setUsers(res["Users"]);
+    // initTE({ Chart });
+    // new Chart(
+    //   document.getElementById("bar-chart-horizontal"),
+    //   dataBarHorizontal,
+    //   optionsBarHorizontal
+    // );
+
+    const getUsers = async () => {
+      try {
+        let allUsers = [];
+        let more = true;
+        let paginationToken = '';
+        setUsersLoaded(false);
+
+        while (more) {
+          let params = {
+            UserPoolId: API_MAP.USER_POOL_ID,
+            Limit: 60
+          };
+          if (paginationToken !== '') {
+            params.PaginationToken = paginationToken;
+          }
+
+          AWS.config.update({
+            region: API_MAP.USER_POOL_REGION,
+            accessKeyId: API_MAP.AWS_IAM_ACCESS_KEY_ID,
+            secretAccessKey: API_MAP.AWS_IAM_SECRETACCESS_KEY
+          });
+          const cognito = new AWS.CognitoIdentityServiceProvider();
+          const rawUsers = await cognito.listUsers(params).promise();
+          allUsers = allUsers.concat(rawUsers.Users);
+          if (allUsers.length > 0) {
             setUsersLoaded(true);
           }
-        })();
+          // console.log(allUsers);
+          if (rawUsers.PaginationToken) {
+            paginationToken = rawUsers.PaginationToken;
+          } else {
+            more = false;
+          }
+        }
+        setUsers(allUsers);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    useEffect(() => {
+      getUsers();
     }, []);
 
     return (
         <div className="w-full Statistic">
             <h1 className="uppercase">TOP 20 TEILNEHMER</h1>
             <div className="w-full mx-auto mb-10 overflow-hidden xl:w-2/3">
-                <canvas id="bar-chart-horizontal"></canvas>
+                {/* <canvas id="bar-chart-horizontal"></canvas> */}
             </div>
             
             {usersLoaded && (
-                <>
-                <h1 className="uppercase">Alle TEILNEHMER ({users.length})</h1>
+              <>
+              <h1 className="uppercase">Alle TEILNEHMER ({users.length})</h1>
 
-                <div className="flex flex-wrap mb-5 -m-4">
-                {users.map(teilnehmer => <Subscriber teilnehmer={teilnehmer} />)}
-                </div>
-                </>
+              <div className="flex flex-wrap mb-10 -m-4">
+              {users.map(teilnehmer => <Subscriber teilnehmer={teilnehmer} />)}
+              </div>
+              </>
             )}
 
             {route !== 'authenticated' && <Alert type="info" title="Willst Du mitmachen?" content="Jetzt sich registrieren und direkt miteinsteigen." navigate="/login" button="Anmelden" />}
