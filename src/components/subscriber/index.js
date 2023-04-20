@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { Auth, API, DataStore } from 'aws-amplify';
+import { Skills } from '../../models';
 import { useNavigate } from 'react-router-dom';
-import { Auth, API } from 'aws-amplify';
 
 let nextToken;
 
@@ -23,11 +24,40 @@ async function listMembers(limit){
   return rest;
 }
 
+function SubscriberItem({teilnehmer}) {
+  const [currentUser] = useState();
+  const navigate = useNavigate();
+  const [skillsNr, setSkillsNr] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      await DataStore.query(Skills, (c) => c.and(c => [
+        c.teilnehmer.eq(teilnehmer.Username),
+        c.state.eq(1)
+      ])).then(function(result) {
+        setSkillsNr(result.length);
+      });
+    })();
+  }, []);
+
+  return (
+    <button
+      onClick={() => navigate('/subscriber/'+teilnehmer.Username)}
+      key={teilnehmer.Username}
+      className={"flex items-center w-full px-5 py-1.5 transition-colors duration-200 gap-x-2 "+ (currentUser === teilnehmer.Username ? 'text-teal-700 bg-teal-50': 'hover:bg-gray-100')}>
+      <div className="text-left rtl:text-right">
+        <div className="text-sm font-medium text-gray-700 capitalize">
+          {teilnehmer.Attributes[3].Value} {teilnehmer.Attributes[4].Value}
+          <span className="ml-2 text-xs text-gray-500">({skillsNr} Suran)</span>
+        </div>
+      </div>
+    </button>
+  )
+}
+
 function Subscriber() {
     const [users, setUsers] = useState([]);
-    const [currentUser] = useState();
     const [usersLoaded, setUsersLoaded] = useState(false);
-    const navigate = useNavigate();
   
     useEffect(() => {
       (async () => {
@@ -46,15 +76,7 @@ function Subscriber() {
       <div className="mt-8">
         {usersLoaded ? (
           users.map(teilnehmer => (
-            <button
-              onClick={() => navigate('/subscriber/'+teilnehmer.Username)}
-              key={teilnehmer.Username}
-              className={"flex items-center w-full px-5 py-2 transition-colors duration-200 gap-x-2 "+ (currentUser === teilnehmer.Username ? 'text-teal-700 bg-teal-50': 'hover:bg-gray-100')}>
-              <div className="text-left rtl:text-right">
-                <h1 className="text-sm font-medium text-gray-700 capitalize">{teilnehmer.Attributes[3].Value} {teilnehmer.Attributes[4].Value}</h1>
-                <p className="text-xs text-gray-500">0 Suran</p>
-              </div>
-            </button>
+            <SubscriberItem teilnehmer={teilnehmer} />
           ))
         ) : (
           <p className='px-5'>
