@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Auth, API, DataStore, Predicates } from 'aws-amplify';
+import React, { useState, useEffect } from "react";
+import { DataStore } from 'aws-amplify';
 import { Skills } from '../../models';
 import { differenceInYears, parse } from "date-fns";
 
