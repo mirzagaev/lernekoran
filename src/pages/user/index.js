@@ -19,7 +19,7 @@ function SuraContainer({suraId}) {
 
     return (
         sura &&
-        <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
+        <div className="w-full p-1.5 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
             <div className="flex items-center justify-center px-5 py-3 bg-lime-100 sm:flex-row">
                 <div className="flex-grow">
                     <h2 className="text-lg font-medium text-gray-900 title-font">{sura.sura}</h2>
@@ -60,7 +60,7 @@ function UserContainer({user}) {
 
             <Alert type="info" title="Dein aktuelles Ziel" content="Absolviere die Prüfung für das 30. Kapitel, bevor du Suran aus dem 29. Kapitel lernst." />
 
-            <div className="flex flex-wrap mt-4 -m-4">
+            <div className="flex flex-wrap mt-4 -m-1.5">
                 {skills.map(skill => (
                     <SuraContainer suraId={skill.skillsSuraId} key={skill.skillsSuraId} />
                 ))}

@@ -181,7 +181,7 @@ function SkillsContainer({username}) {
                 <h1>{userdata.UserAttributes[3].Value} hat {skillsNr} Suran gelernt</h1>
                 {!suran.length && <Alert type="warning" title="Laden fehlgeschlagen" content="Suran konnten nicht geladen werden" />}
                 
-                <div className="flex flex-wrap mt-4 -m-4">
+                <div className="flex flex-wrap mt-4 -m-2">
                 {suran.map(sura => (
                     <SuraContainer username={username} sura={sura} key={sura.id} />
                 ))}

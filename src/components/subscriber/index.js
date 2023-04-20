@@ -38,7 +38,7 @@ function SubscriberItem({teilnehmer}) {
         setSkillsNr(result.length);
       });
     })();
-  }, []);
+  }, [teilnehmer]);
 
   return (
     <button

@@ -1,6 +1,31 @@
-import Alert from "../../components/alerts";
+import React, { useState, useEffect } from "react";
+import { Auth, API, DataStore } from 'aws-amplify';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Chart, initTE } from "tw-elements";
+import { Skills } from '../../models';
+import Alert from "../../components/alerts";
+import CalculateAge from "../../functions/User";
+
+let nextToken;
+
+async function listMembers(limit){
+  let apiName = 'AdminQueries';
+  let path = '/listUsersInGroup';
+  let myInit = { 
+      queryStringParameters: {
+          "groupname": "Member",
+          "limit": limit,
+          "token": nextToken
+      },
+      headers: {
+          'Content-Type' : 'application/json',
+          Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+      }
+  }
+  const { NextToken, ...rest } =  await API.get(apiName, path, myInit);
+  nextToken = NextToken;
+  return rest;
+}
 
 const dataBarHorizontal = {
     type: "bar",
@@ -68,9 +93,41 @@ const optionsBarHorizontal = {
       },
     },
 };
+
+function Subscriber({teilnehmer}) {
+    // const navigate = useNavigate();
+    const [skillsNr, setSkillsNr] = useState(0);
+    // const [age, setAge] = useState();
   
+    useEffect(() => {
+      (async () => {
+        await DataStore.query(Skills, (c) => c.and(c => [
+          c.teilnehmer.eq(teilnehmer.Username),
+          c.state.eq(1)
+        ])).then(function(result) {
+          setSkillsNr(result.length);
+        });
+      })();
+    }, [teilnehmer]);
+  
+    return (
+        <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
+            <div className="flex items-center justify-center px-5 py-3 bg-slate-200 sm:flex-row">
+                <div className="flex-grow">
+                    <h2 className="text-lg font-medium text-gray-900 title-font">{teilnehmer.Attributes[3].Value} {teilnehmer.Attributes[4].Value.substring(0, 1)}.</h2>
+                        <p className="-mt-1 text-sm font-light leading-relaxed"><CalculateAge birthdate={teilnehmer.Attributes[1].Value} /> Jahre alt</p>
+                </div>
+                <div className="inline-flex items-center justify-center px-3 ml-auto text-sm font-semibold text-gray-500 bg-white w-fit h-9 sm:flex-col">
+                    <div className=''>{skillsNr} Themen gelernt</div>
+                </div>
+            </div>
+        </div>
+    )
+  }
 
 function Statistic() {
+    const [users, setUsers] = useState([]);
+    const [usersLoaded, setUsersLoaded] = useState(false);
     const { route } = useAuthenticator((context) => [context.route]);
     
     initTE({ Chart });
@@ -79,6 +136,17 @@ function Statistic() {
         dataBarHorizontal,
         optionsBarHorizontal
     );
+    
+    useEffect(() => {
+        (async () => {
+          setUsersLoaded(false);
+          let res = await listMembers();
+          if (res["Users"].length > 0) {
+            setUsers(res["Users"]);
+            setUsersLoaded(true);
+          }
+        })();
+    }, []);
 
     return (
         <div className="w-full Statistic">
@@ -87,43 +155,15 @@ function Statistic() {
                 <canvas id="bar-chart-horizontal"></canvas>
             </div>
             
-            <h1 className="uppercase">Alle TEILNEHMER (44)</h1>
+            {usersLoaded && (
+                <>
+                <h1 className="uppercase">Alle TEILNEHMER ({users.length})</h1>
 
-            <div className="flex flex-wrap mb-5 -m-4">
-                <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-                    <div className="flex items-center justify-center px-5 py-3 bg-slate-200 sm:flex-row">
-                        <div className="flex-grow">
-                            <h2 className="text-lg font-medium text-gray-900 title-font">Sahm A.</h2>
-                            <p className="-mt-1 text-sm font-light leading-relaxed">14 Jahre alt</p>
-                        </div>
-                        <div className="inline-flex items-center justify-center px-3 ml-auto text-sm font-semibold text-gray-500 bg-white w-fit h-9 sm:flex-col">
-                            <div className=''>66 Themen gelernt</div>
-                        </div>
-                    </div>
+                <div className="flex flex-wrap mb-5 -m-4">
+                {users.map(teilnehmer => <Subscriber teilnehmer={teilnehmer} />)}
                 </div>
-                <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-                    <div className="flex items-center justify-center px-5 py-3 bg-slate-200 sm:flex-row">
-                        <div className="flex-grow">
-                            <h2 className="text-lg font-medium text-gray-900 title-font">Jabir A.</h2>
-                            <p className="-mt-1 text-sm font-light leading-relaxed">13 Jahre alt</p>
-                        </div>
-                        <div className="inline-flex items-center justify-center px-3 ml-auto text-sm font-semibold text-gray-500 bg-white w-fit h-9 sm:flex-col">
-                            <div className=''>51 Themen gelernt</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="w-full p-4 sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-                    <div className="flex items-center justify-center px-5 py-3 bg-slate-200 sm:flex-row">
-                        <div className="flex-grow">
-                            <h2 className="text-lg font-medium text-gray-900 title-font">Jabir A.</h2>
-                            <p className="-mt-1 text-sm font-light leading-relaxed">13 Jahre alt</p>
-                        </div>
-                        <div className="inline-flex items-center justify-center px-3 ml-auto text-sm font-semibold text-gray-500 bg-white w-fit h-9 sm:flex-col">
-                            <div className=''>51 Themen gelernt</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </>
+            )}
 
             {route !== 'authenticated' && <Alert type="info" title="Willst Du mitmachen?" content="Jetzt sich registrieren und direkt miteinsteigen." navigate="/login" button="Anmelden" />}
         </div>
