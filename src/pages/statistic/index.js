@@ -105,12 +105,6 @@ function Subscriber({teilnehmer}) {
     )
 }
 
-const API_MAP = {
-  USER_POOL_ID: "eu-central-1_5DnUlAAXB",
-  USER_POOL_REGION: "eu-central-1",
-  AWS_IAM_ACCESS_KEY_ID: "AKIAV2T7ZGLIKAM2OM4L",
-  AWS_IAM_SECRETACCESS_KEY: "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"
-};
 
 function Statistic() {
     const [users, setUsers] = useState([]);
@@ -133,7 +127,7 @@ function Statistic() {
 
         while (more) {
           let params = {
-            UserPoolId: API_MAP.USER_POOL_ID,
+            UserPoolId: "eu-central-1_5DnUlAAXB",
             Limit: 60
           };
           if (paginationToken !== '') {
@@ -141,9 +135,9 @@ function Statistic() {
           }
 
           AWS.config.update({
-            region: API_MAP.USER_POOL_REGION,
-            accessKeyId: API_MAP.AWS_IAM_ACCESS_KEY_ID,
-            secretAccessKey: API_MAP.AWS_IAM_SECRETACCESS_KEY
+            region: "eu-central-1",
+            accessKeyId: "AKIAV2T7ZGLIKAM2OM4L",
+            secretAccessKey: "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"
           });
           const cognito = new AWS.CognitoIdentityServiceProvider();
           const rawUsers = await cognito.listUsers(params).promise();
