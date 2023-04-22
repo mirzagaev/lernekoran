@@ -158,9 +158,9 @@ function Statistic() {
       }
     };
 
-    useEffect(() => {
-      getUsers();
-    }, []);
+    // useEffect(() => {
+    //   getUsers();
+    // }, []);
 
     return (
         <div className="w-full Statistic">
