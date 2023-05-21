@@ -109,10 +109,10 @@ function Container() {
     );
 }
 
-export function LoginInfopage() {
-    return (
-        <button onClick={() => Container.openPage('/login')} className="p-1.5 transition-colors duration-200 rounded-lg bg-teal-50 text-gray-500 hover:bg-gray-100">Login</button>
-    );
-}
+// export function LoginInfopage() {
+//     return (
+//         <button onClick={() => Container.openPage('/login')} className="p-1.5 transition-colors duration-200 rounded-lg bg-teal-50 text-gray-500 hover:bg-gray-100">Login</button>
+//     );
+// }
 
 export default Container;
