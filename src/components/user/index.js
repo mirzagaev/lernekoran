@@ -34,7 +34,7 @@ function Userpanel({user, group}) {
       </svg>
       <div className="pl-3">
         <p className="text-sm font-medium leading-none text-gray-800">
-          {group === 'Admin' && "Administation"}
+          {group === 'Organisator' && "Organisator"}
           {group === 'Teacher' && "Lehrkraft"}
           {group === 'Member' && "Teilnehmer/in"}
         </p>

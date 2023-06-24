@@ -9,15 +9,15 @@ async function listMembers(limit){
   let apiName = 'AdminQueries';
   let path = '/listUsersInGroup';
   let myInit = { 
-      queryStringParameters: {
-          "groupname": "Member",
-          "limit": limit,
-          "token": nextToken
-      },
-      headers: {
-          'Content-Type' : 'application/json',
-          Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
-      }
+    queryStringParameters: {
+      "groupname": "Member",
+      "limit": limit,
+      "token": nextToken
+    },
+    headers: {
+      'Content-Type' : 'application/json',
+      Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+    }
   }
   const { NextToken, ...rest } =  await API.get(apiName, path, myInit);
   nextToken = NextToken;

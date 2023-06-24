@@ -9,6 +9,7 @@ import Subscriber from "../subscriber";
 import Userpanel from "../user";
 import Statistic from "../statistic";
 import Group from '../group';
+import Register from '../../components/register';
 
 function MyRoutes() {
   return (
@@ -33,6 +34,7 @@ function MyRoutes() {
           } />
         </Route>
         <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
     </BrowserRouter>
   );
