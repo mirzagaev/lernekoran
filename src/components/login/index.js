@@ -56,9 +56,9 @@ function Login({ user }) {
                         name="rolle"
                         required>
                           <option value="0">Bitte wählen Sie Ihre Rolle aus</option>
-                          <option value="Organisator">Organisator</option>
+                          <option value="Manager">Organisator</option>
                           <option value="Teacher">Lehrer</option>
-                          <option value="Member">Schüler</option>
+                          <option value="Student">Schüler</option>
                       </SelectField>
                       </>
                   );
